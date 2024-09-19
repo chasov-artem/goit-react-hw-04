@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { fetchImages } from "./components/Services/api";
+import ImageGallery from "./components/ImageGallery/ImageGallery";
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -14,24 +15,7 @@ const App = () => {
   }, []);
   return (
     <>
-      <ul>
-        {images.map((image) => (
-          <li key={image.id}>
-            <a
-              href={image.links?.html}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src={image.urls?.small}
-                alt={image.alt_description || "No description available"}
-              />
-            </a>
-            <p>{image.alt_description || "No description available"}</p>
-            <p>Likes: {image.likes}</p>
-          </li>
-        ))}
-      </ul>
+      <ImageGallery images={images} />
     </>
   );
 };
