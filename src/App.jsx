@@ -2,24 +2,34 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { fetchImages } from "./components/Services/api";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
+import Loader from "./components/Loader/Loader";
 
 const App = () => {
   const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchImages();
-      console.log(data);
-      setImages(data);
+      try {
+        setIsError(false);
+        setIsLoading(true);
+        const data = await fetchImages();
+        setImages(data);
+      } catch {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getData();
   }, []);
   return (
     <>
-      <ImageGallery images={images} />
+      {images.length > 0 && <ImageGallery images={images} />}
+      {isLoading && <Loader />}
+      {isError && <h2>Something went wrong!</h2>}
     </>
   );
 };
 
 export default App;
-
-//  axios.get("https://api.unsplash.com/photos/?client_id=o0An1ivigFe085X0c1vk1yk-7bEYxSTLCOuGYVqyDZA&query=nature");
