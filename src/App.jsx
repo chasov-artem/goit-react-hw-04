@@ -5,6 +5,10 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
 import SearchBar from "./components/SearchBar/SearchBar";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./components/ImageModal/ImageModal";
+import ReactModal from "react-modal";
+
+ReactModal.setAppElement("#root");
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -12,6 +16,9 @@ const App = () => {
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -31,6 +38,7 @@ const App = () => {
       getData();
     }
   }, [page, query]);
+
   const handleChangePage = () => {
     setPage((prev) => prev + 1);
   };
@@ -40,13 +48,33 @@ const App = () => {
     setPage(1);
     setImages([]);
   };
+
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setSelectedImage(null);
+  };
+
   return (
     <>
       <SearchBar setQuery={handleSearch} />
-      {images.length > 0 && <ImageGallery images={images} />}
+      {images.length > 0 && (
+        <ImageGallery images={images} openModal={openModal} />
+      )}
       {isLoading && <Loader />}
       {isError && <h2>Something went wrong!</h2>}
       {images.length > 0 && <LoadMoreBtn handleChangePage={handleChangePage} />}
+      {isOpen && (
+        <ImageModal
+          isOpen={isOpen}
+          onRequestClose={closeModal}
+          selectedImage={selectedImage}
+        />
+      )}
     </>
   );
 };
