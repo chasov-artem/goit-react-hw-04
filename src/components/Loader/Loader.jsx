@@ -4,12 +4,12 @@ const Loader = () => {
   return (
     <Vortex
       visible={true}
-      height="80"
-      width="80"
+      height="180"
+      width="180"
       ariaLabel="vortex-loading"
       wrapperStyle={{}}
       wrapperClass="vortex-wrapper"
-      colors={["red", "green", "blue", "yellow", "orange", "purple"]}
+      colors={["blue", "yellow"]}
     />
   );
 };
