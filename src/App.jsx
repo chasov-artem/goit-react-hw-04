@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import { fetchImages } from "./components/Services/api";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
@@ -29,8 +29,7 @@ const App = () => {
         setIsLoading(true);
         const { images: newImages, totalPages } = await fetchImages(
           page,
-          query,
-          6
+          query
         );
         setImages((prevImages) =>
           page === 1 ? newImages : [...prevImages, ...newImages]
@@ -46,6 +45,7 @@ const App = () => {
       getData();
     }
   }, [page, query]);
+
   const handleChangePage = () => {
     setPage((prev) => prev + 1);
   };
@@ -68,7 +68,9 @@ const App = () => {
 
   return (
     <>
-      <SearchBar setQuery={handleSearch} />
+      <header className={styles.header}>
+        <SearchBar setQuery={handleSearch} />
+      </header>
       {images.length > 0 && (
         <ImageGallery images={images} openModal={openModal} />
       )}

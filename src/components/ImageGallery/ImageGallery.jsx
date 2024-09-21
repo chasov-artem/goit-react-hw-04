@@ -1,5 +1,5 @@
+import styles from "./ImageGallery.module.css";
 import ImageCard from "../ImageCard/ImageCard";
-import "./ImageGallery.module.css";
 
 const ImageGallery = ({ images, openModal }) => {
   const handleImageClick = (event, image) => {
@@ -9,11 +9,11 @@ const ImageGallery = ({ images, openModal }) => {
 
   return (
     <div>
-      <ul>
+      <ul className={styles.ul}>
         {images.map((image) => (
           <li
             key={image.id}
-            className="image-item"
+            className={styles.li}
             onClick={(event) => handleImageClick(event, image)}
           >
             <ImageCard image={image} />
