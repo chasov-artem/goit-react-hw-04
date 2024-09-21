@@ -29,7 +29,8 @@ const App = () => {
         setIsLoading(true);
         const { images: newImages, totalPages } = await fetchImages(
           page,
-          query
+          query,
+          6
         );
         setImages((prevImages) =>
           page === 1 ? newImages : [...prevImages, ...newImages]
@@ -45,7 +46,6 @@ const App = () => {
       getData();
     }
   }, [page, query]);
-
   const handleChangePage = () => {
     setPage((prev) => prev + 1);
   };

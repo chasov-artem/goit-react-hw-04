@@ -30,6 +30,29 @@ body {
   min-height: 100vh;
 }
 
+header {
+  background-color: #3949ab;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+header form {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+input[name="query"] {
+  width: 300px;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -52,6 +75,21 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+button[type="submit"] {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #f50057;
 }
 
 @media (prefers-color-scheme: light) {

@@ -1,5 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import toast from "react-hot-toast";
+import "./SearchBar.module.css";
 
 const SearchBar = ({ setQuery }) => {
   const initialValues = { query: "" };

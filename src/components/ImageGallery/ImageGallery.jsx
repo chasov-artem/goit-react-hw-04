@@ -1,4 +1,5 @@
 import ImageCard from "../ImageCard/ImageCard";
+import "./ImageGallery.module.css";
 
 const ImageGallery = ({ images, openModal }) => {
   const handleImageClick = (event, image) => {

@@ -1,4 +1,5 @@
 import ReactModal from "react-modal";
+import "./ImageModal.module.css";
 
 const customStyles = {
   overlay: {
