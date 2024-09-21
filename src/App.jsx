@@ -7,6 +7,8 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
 import ReactModal from "react-modal";
+import { Toaster } from "react-hot-toast";
+import { ErrorMessage } from "formik";
 
 ReactModal.setAppElement("#root");
 
@@ -18,16 +20,21 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const getData = async () => {
       try {
         setIsError(false);
         setIsLoading(true);
-        const data = await fetchImages(page, query);
-        setImages((prevImages) =>
-          page === 1 ? data : [...prevImages, ...data]
+        const { images: newImages, totalPages } = await fetchImages(
+          page,
+          query
         );
+        setImages((prevImages) =>
+          page === 1 ? newImages : [...prevImages, ...newImages]
+        );
+        setTotalPages(totalPages);
       } catch {
         setIsError(true);
       } finally {
@@ -66,15 +73,20 @@ const App = () => {
         <ImageGallery images={images} openModal={openModal} />
       )}
       {isLoading && <Loader />}
-      {isError && <h2>Something went wrong!</h2>}
-      {images.length > 0 && <LoadMoreBtn handleChangePage={handleChangePage} />}
-      {isOpen && (
+      {isError && <ErrorMessage />}
+      {images.length > 0 && page < totalPages && (
+        <LoadMoreBtn handleChangePage={handleChangePage} />
+      )}
+
+      {isOpen && selectedImage && (
         <ImageModal
           isOpen={isOpen}
           onRequestClose={closeModal}
           selectedImage={selectedImage}
         />
       )}
+
+      <Toaster position="top-right" reverseOrder={false} />
     </>
   );
 };
